@@ -7,8 +7,6 @@ using OpenQA.Selenium.Chrome;
 using Microsoft.Extensions.Configuration;
 using WebSite.BotRunning;
 using WebSite.Common.Entities;
-using WebSite.Common.Interfaces;
-using WebSite.Implementation;
 
 namespace Review
 {

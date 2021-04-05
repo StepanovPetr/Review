@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Website.Common\WebSite.Common.csproj" />
-    <ProjectReference Include="..\WebSite.Professorrating.org\WebSite.Implementation.csproj" />
+    <ProjectReference Include="..\WebSite.Implementation\WebSite.Implementation.csproj" />
   </ItemGroup>
 
 </Project>

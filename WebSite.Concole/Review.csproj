@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WebSite.BotRunning\WebSite.BotRunning.csproj" />
     <ProjectReference Include="..\Website.Common\WebSite.Common.csproj" />
-    <ProjectReference Include="..\WebSite.Professorrating.org\WebSite.Implementation.csproj" />
   </ItemGroup>
 
   <ItemGroup>

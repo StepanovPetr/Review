@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using WebSite.Common.Interfaces;
 
 namespace WebSite.Implementation

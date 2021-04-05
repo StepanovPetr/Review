@@ -7,5 +7,7 @@
         public string Url { get; set; }
 
         public bool IsLogin { get; set; }
+
+        public bool IsLoop { get; set; }
     }
 }

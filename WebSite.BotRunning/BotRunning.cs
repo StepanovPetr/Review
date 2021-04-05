@@ -12,9 +12,10 @@ namespace WebSite.BotRunning
 {
     public class BotRunning
     {
-        private readonly Settings _settings;
-        private readonly string[] _proxyServers;
         private readonly Login[] _logins;
+        private readonly string[] _proxyServers;
+        private readonly Settings _settings;
+
         public BotRunning(Settings settings, string[] proxyServers, Login[] logins)
         {
             _settings = settings;
@@ -25,19 +26,35 @@ namespace WebSite.BotRunning
         public void Run()
         {
             if (_settings.IsLogin == false)
-            {
-                ReviewRequest(_settings.Url, _proxyServers, _settings.MaxDegreeOfParallelism);
-            }
+                ReviewRequest(_settings.Url,  _settings.IsLoop, _proxyServers, _settings.MaxDegreeOfParallelism);
         }
 
-        private void ReviewRequest(string url, string[] proxyList, int maxDegreeOfParallelism = 5)
+        private void ReviewRequest(string url, bool isLoop, string[] proxyList, int maxDegreeOfParallelism = 5)
         {
             Parallel.ForEach(proxyList, new ParallelOptions
                 {
                     CancellationToken = new CancellationToken(),
                     MaxDegreeOfParallelism = maxDegreeOfParallelism
                 },
-                proxy => { Request(proxy, url, "", ""); });
+                proxy =>
+                {
+                    if (isLoop)
+                    {
+                        RequestLoop(proxy, url, "", "");
+                    }
+                    else
+                    {
+                        Request(proxy, url, "", "");
+                    }
+                });
+        }
+
+        private void RequestLoop(string proxy, string url, string login, string password)
+        {
+            while (true)
+            {
+                Request(proxy, url, login, password);
+            }
         }
 
         private void Request(string proxy, string url, string login, string password)
@@ -53,7 +70,7 @@ namespace WebSite.BotRunning
             IWebDriver driver = new ChromeDriver(".", options);
             try
             {
-                IWebSite site = new WebSiteInstagram();
+                IWebSite site = new WebSiteKonfpmfi();
                 site.SetChromeDriver(driver);
                 site.Login(login, password);
                 site.Like(url);
