@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Threading;
 using OpenQA.Selenium;
+using WebSite.Common.Helpers;
 using WebSite.Common.Interfaces;
 
 namespace WebSite.Implementation
 {
     public class WebSiteKonfpmfi : IWebSite
     {
-        private static readonly string[] FirstNames =
-            {"Цукерман", "Абрамович", "Финк", "Вайнилис", "Гольдман", "Крутак", "Кудес"};
-
-        private static readonly string[] SecondNames =
-            {"Иосиф", "Лазарь", "Финк", "Вайнилис", "Яков", "Фалик", "Иисус", "Израиль"};
-
         private IWebDriver _driver;
 
         public string BaseUrl { get; set; } = "http://konfpmfi.omgtu.ru/?page_id=18";
@@ -29,13 +23,13 @@ namespace WebSite.Implementation
 
             _driver.Navigate().GoToUrl(BaseUrl);
             var firstName = _driver.FindElement(By.Name("name1"));
-            firstName.SendKeys(FirstNames[rand.Next(0, FirstNames.Length)]);
+            firstName.SendKeys(NameHelper.FirstNames[rand.Next(0, NameHelper.FirstNames.Length)]);
 
             var lastName = _driver.FindElement(By.Name("name2"));
-            lastName.SendKeys(SecondNames[rand.Next(0, SecondNames.Length)]);
+            lastName.SendKeys(NameHelper.SecondNames[rand.Next(0, NameHelper.SecondNames.Length)]);
 
             var middleName = _driver.FindElement(By.Name("name3"));
-            middleName.SendKeys(FirstNames[rand.Next(0, FirstNames.Length)]);
+            middleName.SendKeys(NameHelper.FirstNames[rand.Next(0, NameHelper.FirstNames.Length)]);
 
             var date = _driver.FindElement(By.Name("date-643"));
             date.SendKeys("15.04.2021");

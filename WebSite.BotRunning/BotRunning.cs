@@ -10,12 +10,17 @@ using WebSite.Implementation;
 
 namespace WebSite.BotRunning
 {
+    /// <summary> Класс для запуска бота. </summary>
     public class BotRunning
     {
         private readonly Login[] _logins;
         private readonly string[] _proxyServers;
         private readonly Settings _settings;
 
+        /// <summary> Инициализирует эеземпляр класса <see cref="BotRunning"/>>.  </summary>
+        /// <param name="settings"></param>
+        /// <param name="proxyServers"></param>
+        /// <param name="logins"></param>
         public BotRunning(Settings settings, string[] proxyServers, Login[] logins)
         {
             _settings = settings;
@@ -23,12 +28,14 @@ namespace WebSite.BotRunning
             _logins = logins;
         }
 
+        /// <summary> Метод запуска бота. </summary>
         public void Run()
         {
             if (_settings.IsLogin == false)
                 ReviewRequest(_settings.Url,  _settings.IsLoop, _proxyServers, _settings.MaxDegreeOfParallelism);
         }
 
+        /// <summary> Метод с логикой для отправки запроса. </summary>
         private void ReviewRequest(string url, bool isLoop, string[] proxyList, int maxDegreeOfParallelism = 5)
         {
             Parallel.ForEach(proxyList, new ParallelOptions
@@ -49,6 +56,7 @@ namespace WebSite.BotRunning
                 });
         }
 
+        /// <summary> Метод с отправки запроса в цикле. </summary>
         private void RequestLoop(string proxy, string url, string login, string password)
         {
             while (true)
@@ -57,6 +65,7 @@ namespace WebSite.BotRunning
             }
         }
 
+        /// <summary> Метод с отправки запроса. </summary>
         private void Request(string proxy, string url, string login, string password)
         {
             var options = new ChromeOptions();
