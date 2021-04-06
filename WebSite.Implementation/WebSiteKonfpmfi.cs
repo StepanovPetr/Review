@@ -19,6 +19,11 @@ namespace WebSite.Implementation
 
         public void Like(string url)
         {
+            return;
+        }
+
+        public void CustomAction(string url)
+        {
             var rand = new Random();
 
             _driver.Navigate().GoToUrl(BaseUrl);

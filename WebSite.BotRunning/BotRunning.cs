@@ -82,7 +82,7 @@ namespace WebSite.BotRunning
                 IWebSite site = new WebSiteKonfpmfi();
                 site.SetChromeDriver(driver);
                 site.Login(login, password);
-                site.Like(url);
+                site.CustomAction(url);
 
                 File.AppendAllText("GoodProxy.txt", $"{proxy} {Environment.NewLine}");
             }

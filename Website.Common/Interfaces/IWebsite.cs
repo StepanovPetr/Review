@@ -11,6 +11,8 @@ namespace WebSite.Common.Interfaces
 
         void Like(string url);
 
+        void CustomAction(string url);
+
         void SetChromeDriver(IWebDriver driver);
     }
 }

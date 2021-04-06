@@ -9,6 +9,11 @@ namespace WebSite.Implementation
 
         public string BaseUrl { get; set; } = "https://www.instagram.com/";
 
+        public void CustomAction(string url)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void SetChromeDriver(IWebDriver driver)
         {
             _driver = driver;
