@@ -3,7 +3,7 @@
     "MaxDegreeOfParallelism": 1,
     "Url": "https://professorrating.org/professor.php?id=3281#gsc.tab=0",
     "IsLogin": false,
-    "isLoop" : false  
+    "isLoop": false
   },
   "Logins": [
     {
@@ -17,7 +17,7 @@
   ],
   "ProxyServers": [
     {
-      "Ip": "63.141.128.86",
+      "Ip": "37.140.51.159",
       "Port": "80",
       "Login": "vsetQE",
       "Password": "JRAVyU"

@@ -3,14 +3,13 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using WebSite.Common.Entities;
 using WebSite.Common.Interfaces;
-using WebSite.Implementation;
 using WebSite.Implementation.Sites;
 using Proxy = WebSite.Common.Entities.Proxy;
 
-namespace WebSite.BotRunning
+namespace WebSite.Implementation
 {
     /// <summary> Класс для запуска бота. </summary>
     public class BotRunning
@@ -58,31 +57,26 @@ namespace WebSite.BotRunning
                 });
         }
 
-        /// <summary> Метод с отправки запроса в цикле. </summary>
-        //private void RequestLoop(Proxy proxy, string url, string login, string password)
-        //{
-        //    while (true)
-        //    {
-        //        Request(proxy, url, login, password);
-        //    }
-        //};
-
         /// <summary> Метод с отправки запроса. </summary>
         private void Request(Proxy proxy, string url, string login, string password)
         {
-            var options = new ChromeOptions();
+            var options = new FirefoxOptions();
 
-            options.AddExcludedArgument("enable-automation");
-            options.AddAdditionalCapability("useAutomationExtension", false);
-            
             //Добавляем HTTP-прокси
-            //options.AddArgument("--proxy-server=http://proxy_ip:proxy_port");
+            options.Proxy = new OpenQA.Selenium.Proxy()
+            {
+                HttpProxy = "77.238.103.98:8080",
+                SslProxy = "77.238.103.98:8080"
+            };
+            options.AcceptInsecureCertificates = true; // если прокси с самоподписанными сертификатами
 
-            IWebDriver driver = new ChromeDriver(".", options);
+
+            IWebDriver driver = new FirefoxDriver(options);
             try
             {
-                IWebSite site = new WebSiteDigitalOmgtu();
+                IWebSite site = new WebSiteDreamJob();
                 site.SetChromeDriver(driver);
+
                 //site.Login(login, password);
                 site.CustomAction(url);
 
