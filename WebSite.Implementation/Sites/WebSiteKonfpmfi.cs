@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using WebSite.Common.Helpers;
 using WebSite.Common.Interfaces;
 
-namespace WebSite.Implementation
+namespace WebSite.Implementation.Sites
 {
     public class WebSiteKonfpmfi : IWebSite
     {
@@ -14,12 +14,12 @@ namespace WebSite.Implementation
 
         public void Login(string login, string password)
         {
-            return;
+            throw new NotImplementedException();
         }
 
         public void Like(string url)
         {
-            return;
+            throw new NotImplementedException();
         }
 
         public void CustomAction(string url)

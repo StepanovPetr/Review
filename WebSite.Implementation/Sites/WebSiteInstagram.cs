@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using WebSite.Common.Interfaces;
 
-namespace WebSite.Implementation
+namespace WebSite.Implementation.Sites
 {
     public class WebSiteInstagram : IWebSite
     {

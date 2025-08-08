@@ -1,9 +1,9 @@
 {
   "Settings": {
-    "MaxDegreeOfParallelism": 10,
+    "MaxDegreeOfParallelism": 1,
     "Url": "https://professorrating.org/professor.php?id=3281#gsc.tab=0",
     "IsLogin": false,
-    "isLoop" : true  
+    "isLoop" : false  
   },
   "Logins": [
     {
@@ -16,15 +16,11 @@
     }
   ],
   "ProxyServers": [
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080",
-    "81.95.36.90:8080"
+    {
+      "Ip": "63.141.128.86",
+      "Port": "80",
+      "Login": "vsetQE",
+      "Password": "JRAVyU"
+    }
   ]
 }

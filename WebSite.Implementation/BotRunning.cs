@@ -7,6 +7,8 @@ using OpenQA.Selenium.Chrome;
 using WebSite.Common.Entities;
 using WebSite.Common.Interfaces;
 using WebSite.Implementation;
+using WebSite.Implementation.Sites;
+using Proxy = WebSite.Common.Entities.Proxy;
 
 namespace WebSite.BotRunning
 {
@@ -14,14 +16,14 @@ namespace WebSite.BotRunning
     public class BotRunning
     {
         private readonly Login[] _logins;
-        private readonly string[] _proxyServers;
+        private readonly Proxy[] _proxyServers;
         private readonly Settings _settings;
 
         /// <summary> Инициализирует эеземпляр класса <see cref="BotRunning"/>>.  </summary>
         /// <param name="settings"></param>
         /// <param name="proxyServers"></param>
         /// <param name="logins"></param>
-        public BotRunning(Settings settings, string[] proxyServers, Login[] logins)
+        public BotRunning(Settings settings, Proxy[] proxyServers, Login[] logins)
         {
             _settings = settings;
             _proxyServers = proxyServers;
@@ -36,7 +38,7 @@ namespace WebSite.BotRunning
         }
 
         /// <summary> Метод с логикой для отправки запроса. </summary>
-        private void ReviewRequest(string url, bool isLoop, string[] proxyList, int maxDegreeOfParallelism = 5)
+        private void ReviewRequest(string url, bool isLoop, Proxy[] proxyList, int maxDegreeOfParallelism = 5)
         {
             Parallel.ForEach(proxyList, new ParallelOptions
                 {
@@ -47,7 +49,7 @@ namespace WebSite.BotRunning
                 {
                     if (isLoop)
                     {
-                        RequestLoop(proxy, url, "", "");
+                        //RequestLoop(proxy, url, "", "");
                     }
                     else
                     {
@@ -57,42 +59,42 @@ namespace WebSite.BotRunning
         }
 
         /// <summary> Метод с отправки запроса в цикле. </summary>
-        private void RequestLoop(string proxy, string url, string login, string password)
-        {
-            while (true)
-            {
-                Request(proxy, url, login, password);
-            }
-        }
+        //private void RequestLoop(Proxy proxy, string url, string login, string password)
+        //{
+        //    while (true)
+        //    {
+        //        Request(proxy, url, login, password);
+        //    }
+        //};
 
         /// <summary> Метод с отправки запроса. </summary>
-        private void Request(string proxy, string url, string login, string password)
+        private void Request(Proxy proxy, string url, string login, string password)
         {
             var options = new ChromeOptions();
+
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalCapability("useAutomationExtension", false);
-            options.Proxy = new Proxy
-            {
-                HttpProxy = proxy,
-                SslProxy = proxy
-            };
+            
+            //Добавляем HTTP-прокси
+            //options.AddArgument("--proxy-server=http://proxy_ip:proxy_port");
+
             IWebDriver driver = new ChromeDriver(".", options);
             try
             {
-                IWebSite site = new WebSiteKonfpmfi();
+                IWebSite site = new WebSiteDigitalOmgtu();
                 site.SetChromeDriver(driver);
-                site.Login(login, password);
+                //site.Login(login, password);
                 site.CustomAction(url);
 
                 File.AppendAllText("GoodProxy.txt", $"{proxy} {Environment.NewLine}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 File.AppendAllText("BadProxy.txt", $"{proxy} {Environment.NewLine}");
             }
             finally
             {
-                driver.Quit();
+                driver.Close();
             }
         }
     }

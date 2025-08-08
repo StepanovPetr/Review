@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 using WebSite.BotRunning;
 using WebSite.Common.Entities;
@@ -22,11 +17,11 @@ namespace Review
 
             Settings settings = config.GetSection("Settings").Get<Settings>();
             var logins = config.GetSection("Logins").Get<Login[]>();
-            var proxyServers = config.GetSection("ProxyServers").Get<string[]>();
+            var proxyServers = config.GetSection("ProxyServers").Get<WebSite.Common.Entities.Proxy[]>();
 
             var botRunning = new BotRunning(settings, proxyServers, null);
             botRunning.Run();
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }
