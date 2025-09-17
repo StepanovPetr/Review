@@ -60,16 +60,16 @@ namespace WebSite.Implementation
         /// <summary> Метод с отправки запроса. </summary>
         private void Request(Proxy proxy, string url, string login, string password)
         {
-            var options = new FirefoxOptions();
-
-            //Добавляем HTTP-прокси
-            options.Proxy = new OpenQA.Selenium.Proxy()
+            var options = new FirefoxOptions
             {
-                HttpProxy = "77.238.103.98:8080",
-                SslProxy = "77.238.103.98:8080"
+                //Добавляем HTTP-прокси
+                Proxy = new OpenQA.Selenium.Proxy()
+                {
+                    HttpProxy = $"{proxy.Ip}:{proxy.Port}",
+                    SslProxy = $"{proxy.Ip}:{proxy.Port}",
+                },
+                //AcceptInsecureCertificates = true // если прокси с самоподписанными сертификатами
             };
-            options.AcceptInsecureCertificates = true; // если прокси с самоподписанными сертификатами
-
 
             IWebDriver driver = new FirefoxDriver(options);
             try

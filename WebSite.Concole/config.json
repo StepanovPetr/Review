@@ -17,10 +17,18 @@
   ],
   "ProxyServers": [
     {
-      "Ip": "37.140.51.159",
-      "Port": "80",
-      "Login": "vsetQE",
-      "Password": "JRAVyU"
+      "Ip": "31.44.188.250",
+      "Port": "9249",
+      "Login": "bkR6tW",
+      "Password": "3GrC5t"
+    },
+    {
+      "Ip": "31.44.191.91",
+      "Port": "9290"
+    },
+    {
+      "Ip": "31.44.188.222",
+      "Port": "9360"
     }
   ]
 }

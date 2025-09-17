@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
-using System.Xml.Linq;
 using OpenQA.Selenium;
-using WebSite.Common.Helpers;
 using WebSite.Common.Interfaces;
 
 namespace WebSite.Implementation.Sites
@@ -11,7 +9,8 @@ namespace WebSite.Implementation.Sites
     {
         private IWebDriver _driver;
 
-        public string BaseUrl { get; set; } = "https://dreamjob.ru/employers/137032";
+        public string BaseUrl { get; set; } = "https://dreamjob.ru/employers/137032?review_id=3917522";
+        //"https://dreamjob.ru/employers/43841?review_id=4001899";
 
         public void Login(string login, string password)
         {
@@ -26,8 +25,9 @@ namespace WebSite.Implementation.Sites
         public void CustomAction(string url)
         {
             _driver.Navigate().GoToUrl(BaseUrl);
+            Thread.Sleep(9000);
 
-            var button = _driver.FindElement(By.ClassName("review__useful"));
+            var button = _driver.FindElement(By.CssSelector(".bt.bt--32.bt--primary-link.icon-thumbs-up"));
             button.Click();
 
             Thread.Sleep(1000);
