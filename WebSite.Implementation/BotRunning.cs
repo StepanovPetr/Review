@@ -65,8 +65,8 @@ namespace WebSite.Implementation
                 //Добавляем HTTP-прокси
                 Proxy = new OpenQA.Selenium.Proxy()
                 {
-                    HttpProxy = $"{proxy.Ip}:{proxy.Port}",
-                    SslProxy = $"{proxy.Ip}:{proxy.Port}",
+                    HttpProxy = $"{proxy.Ip}",
+                    SslProxy = $"{proxy.Ip}",
                 },
                 //AcceptInsecureCertificates = true // если прокси с самоподписанными сертификатами
             };

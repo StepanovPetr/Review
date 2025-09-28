@@ -1,6 +1,7 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using System;
 using System.Threading;
-using OpenQA.Selenium;
+using System.Xml.Linq;
 using WebSite.Common.Interfaces;
 
 namespace WebSite.Implementation.Sites
@@ -9,7 +10,7 @@ namespace WebSite.Implementation.Sites
     {
         private IWebDriver _driver;
 
-        public string BaseUrl { get; set; } = "https://dreamjob.ru/employers/137032?review_id=3917522";
+        public string BaseUrl { get; set; } = "https://dreamjob.ru/employers/37011?review_id=4027064";
         //"https://dreamjob.ru/employers/43841?review_id=4001899";
 
         public void Login(string login, string password)
@@ -24,13 +25,22 @@ namespace WebSite.Implementation.Sites
 
         public void CustomAction(string url)
         {
-            _driver.Navigate().GoToUrl(BaseUrl);
-            Thread.Sleep(9000);
+            try
+            {
+                _driver.Navigate().GoToUrl(BaseUrl);
+                Thread.Sleep(3000);
 
-            var button = _driver.FindElement(By.CssSelector(".bt.bt--32.bt--primary-link.icon-thumbs-up"));
-            button.Click();
+                IWebElement button = _driver.FindElement(By.CssSelector(".icon-thumbs-up"));
+                IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
 
-            Thread.Sleep(1000);
+                js.ExecuteScript("document.querySelector('.icon-thumbs-up').click();");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+            }
         }
 
         public void SetChromeDriver(IWebDriver driver)
