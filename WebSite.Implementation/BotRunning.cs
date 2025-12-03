@@ -6,38 +6,45 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using WebSite.Common.Entities;
 using WebSite.Common.Interfaces;
-using WebSite.Implementation.Sites;
-using Proxy = WebSite.Common.Entities.Proxy;
 
 namespace WebSite.Implementation
 {
     /// <summary> Класс для запуска бота. </summary>
     public class BotRunning
-    {
-        private readonly Login[] _logins;
-        private readonly Proxy[] _proxyServers;
-        private readonly Settings _settings;
+    { 
+        public Login[] Logins { get; set; }
+
+        public string[] ProxyServers { get; set; }
+
+        public Settings Settings { get; set; }
+
+        public IWebSite WebSite { get; set; }
+
+        public string Url { get; set; }
 
         /// <summary> Инициализирует эеземпляр класса <see cref="BotRunning"/>>.  </summary>
         /// <param name="settings"></param>
         /// <param name="proxyServers"></param>
         /// <param name="logins"></param>
-        public BotRunning(Settings settings, Proxy[] proxyServers, Login[] logins)
+        public BotRunning(Settings settings, string[] proxyServers, Login[] logins)
         {
-            _settings = settings;
-            _proxyServers = proxyServers;
-            _logins = logins;
+            Settings = settings;
+            ProxyServers = proxyServers;
+            Logins = logins;
+        }
+
+        public BotRunning()
+        {
         }
 
         /// <summary> Метод запуска бота. </summary>
         public void Run()
         {
-            if (_settings.IsLogin == false)
-                ReviewRequest(_settings.Url,  _settings.IsLoop, _proxyServers, _settings.MaxDegreeOfParallelism);
+            ReviewRequest(Url,  false, ProxyServers, 1);
         }
 
         /// <summary> Метод с логикой для отправки запроса. </summary>
-        private void ReviewRequest(string url, bool isLoop, Proxy[] proxyList, int maxDegreeOfParallelism = 5)
+        private void ReviewRequest(string url, bool isLoop, string[] proxyList, int maxDegreeOfParallelism = 5)
         {
             Parallel.ForEach(proxyList, new ParallelOptions
                 {
@@ -58,15 +65,15 @@ namespace WebSite.Implementation
         }
 
         /// <summary> Метод с отправки запроса. </summary>
-        private void Request(Proxy proxy, string url, string login, string password)
+        private void Request(string proxy, string url, string login, string password)
         {
             var options = new FirefoxOptions
             {
                 //Добавляем HTTP-прокси
                 Proxy = new OpenQA.Selenium.Proxy()
                 {
-                    HttpProxy = $"{proxy.Ip}",
-                    SslProxy = $"{proxy.Ip}",
+                    HttpProxy = $"{proxy}",
+                    SslProxy = $"{proxy}",
                 },
                 //AcceptInsecureCertificates = true // если прокси с самоподписанными сертификатами
             };
@@ -74,12 +81,9 @@ namespace WebSite.Implementation
             IWebDriver driver = new FirefoxDriver(options);
             try
             {
-                IWebSite site = new WebSiteDreamJob();
-                site.SetChromeDriver(driver);
-
+                WebSite.SetChromeDriver(driver);
                 //site.Login(login, password);
-                site.CustomAction(url);
-
+                WebSite.CustomAction(url);
                 File.AppendAllText("GoodProxy.txt", $"{proxy} {Environment.NewLine}");
             }
             catch (Exception ex)

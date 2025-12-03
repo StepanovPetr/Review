@@ -17,11 +17,15 @@ namespace Review
 
             Settings settings = config.GetSection("Settings").Get<Settings>();
             var logins = config.GetSection("Logins").Get<Login[]>();
-            var proxyServers = config.GetSection("ProxyServers").Get<WebSite.Common.Entities.Proxy[]>();
+            var proxyServers = config.GetSection("ProxyServers").Get<string[]>();
 
-            var botRunning = new BotRunning(settings, proxyServers, null);
-            botRunning.Run();
-            //Console.ReadLine();
+            var botRunning = BotRunningBuilder.CreateBuilder()
+                .SetUrl(settings.Url)
+                .SetProxyServers(proxyServers)
+                .SetWebSites(settings.WebSite)
+                .Build();
+            
+                botRunning.Run();
         }
     }
 }

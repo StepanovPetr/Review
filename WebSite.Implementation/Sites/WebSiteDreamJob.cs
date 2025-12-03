@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Threading;
-using System.Xml.Linq;
 using WebSite.Common.Interfaces;
 
 namespace WebSite.Implementation.Sites
@@ -10,7 +9,7 @@ namespace WebSite.Implementation.Sites
     {
         private IWebDriver _driver;
 
-        public string BaseUrl { get; set; } = "https://dreamjob.ru/employers/37011?review_id=4027064";
+        public string BaseUrl { get; set; } = "https://dreamjob.ru/employers/43841?review_id=4157930о";
         //"https://dreamjob.ru/employers/43841?review_id=4001899";
 
         public void Login(string login, string password)
@@ -27,14 +26,13 @@ namespace WebSite.Implementation.Sites
         {
             try
             {
-                _driver.Navigate().GoToUrl(BaseUrl);
+                _driver.Navigate().GoToUrl(url);
                 Thread.Sleep(3000);
 
                 IWebElement button = _driver.FindElement(By.CssSelector(".icon-thumbs-up"));
                 IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
 
                 js.ExecuteScript("document.querySelector('.icon-thumbs-up').click();");
-
             }
             catch (Exception e)
             {

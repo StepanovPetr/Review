@@ -14,5 +14,7 @@
 
         /// <summary> Запуск действия в бескончном цикле для каждого потока. </summary>
         public bool IsLoop { get; set; }
+
+        public string WebSite { get; set; }
     }
 }
