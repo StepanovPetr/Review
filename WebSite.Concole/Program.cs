@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using WebSite.Common.Entities;
 using WebSite.Implementation;
@@ -20,12 +21,14 @@ namespace Review
             var proxyServers = config.GetSection("ProxyServers").Get<string[]>();
 
             var botRunning = BotRunningBuilder.CreateBuilder()
-                .SetUrl(settings.Url)
+                .SetUrl(settings.Urls)
                 .SetProxyServers(proxyServers)
                 .SetWebSites(settings.WebSite)
                 .Build();
             
                 botRunning.Run();
+
+            Console.WriteLine("Work Done!!!");
         }
     }
 }

@@ -16,11 +16,9 @@ namespace WebSite.Implementation
 
         public string[] ProxyServers { get; set; }
 
-        public Settings Settings { get; set; }
-
         public IWebSite WebSite { get; set; }
 
-        public string Url { get; set; }
+        public string[] Urls { get; set; }
 
         /// <summary> Инициализирует эеземпляр класса <see cref="BotRunning"/>>.  </summary>
         /// <param name="settings"></param>
@@ -28,7 +26,6 @@ namespace WebSite.Implementation
         /// <param name="logins"></param>
         public BotRunning(Settings settings, string[] proxyServers, Login[] logins)
         {
-            Settings = settings;
             ProxyServers = proxyServers;
             Logins = logins;
         }
@@ -40,28 +37,31 @@ namespace WebSite.Implementation
         /// <summary> Метод запуска бота. </summary>
         public void Run()
         {
-            ReviewRequest(Url,  false, ProxyServers, 1);
+            ReviewRequest(Urls,  false, ProxyServers, 1);
         }
 
         /// <summary> Метод с логикой для отправки запроса. </summary>
-        private void ReviewRequest(string url, bool isLoop, string[] proxyList, int maxDegreeOfParallelism = 5)
+        private void ReviewRequest(string[] urls, bool isLoop, string[] proxyList, int maxDegreeOfParallelism = 5)
         {
-            Parallel.ForEach(proxyList, new ParallelOptions
-                {
-                    CancellationToken = new CancellationToken(),
-                    MaxDegreeOfParallelism = maxDegreeOfParallelism
-                },
-                proxy =>
-                {
-                    if (isLoop)
+            foreach (var url in urls)
+            {
+                Parallel.ForEach(proxyList, new ParallelOptions
                     {
-                        //RequestLoop(proxy, url, "", "");
-                    }
-                    else
+                        CancellationToken = new CancellationToken(),
+                        MaxDegreeOfParallelism = maxDegreeOfParallelism
+                    },
+                    proxy =>
                     {
-                        Request(proxy, url, "", "");
-                    }
-                });
+                        if (isLoop)
+                        {
+                            //RequestLoop(proxy, url, "", "");
+                        }
+                        else
+                        {
+                            Request(proxy, url, "", "");
+                        }
+                    });
+            }
         }
 
         /// <summary> Метод с отправки запроса. </summary>

@@ -18,9 +18,9 @@ public class BotRunningBuilder
         return this;
     }
 
-    public BotRunningBuilder SetUrl(string url)
+    public BotRunningBuilder SetUrl(string[] urls)
     {
-        _botRunning.Url = url;
+        _botRunning.Urls = urls;
         return this;
     }
 

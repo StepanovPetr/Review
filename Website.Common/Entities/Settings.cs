@@ -7,7 +7,7 @@
         public int MaxDegreeOfParallelism { get; set; }
 
         /// <summary> URL для запуска. </summary>
-        public string Url { get; set; }
+        public string[] Urls { get; set; }
 
         /// <summary> Параметр отвечающий за то требуется ли аутентификация. </summary>
         public bool IsLogin { get; set; }
